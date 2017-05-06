@@ -26,7 +26,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import model.*;
 /**
  *
  * @author jonas
@@ -75,7 +75,7 @@ public class GUITest2 extends Application {
      MenuItem item2 = new MenuItem("2222");
      MenuItem item3 = new MenuItem("3333");
      popup.getItems().addAll( item1, item2, item3 );*/
-     setMenuItem(ListOfStrings);
+     //setMenuItem(ListOfStrings);
     
      popup.setOnAction( popupAction );
      
@@ -86,10 +86,10 @@ public class GUITest2 extends Application {
      TextField textField_1 = new TextField();
      TextField textField_2 = new TextField();
      //textField_1.addEventHandler( KeyEvent.ANY, keyEventHandler );
-     textField_1.setOnKeyPressed(this::handleOnKeyPressed);
+     //textField_1.setOnKeyPressed(this::handleOnKeyPressed);
     // textField_2.addEventHandler( KeyEvent.ANY, keyEventHandler );     //
      root.getChildren().addAll( textField_1, textField_2 );
-
+     new Auto(ListOfStrings, textField_1);
      primaryStage.setScene(scene);
      primaryStage.setTitle("TextField05");
      primaryStage.setX(300); primaryStage.setY(200); primaryStage.setWidth(300);
@@ -103,16 +103,26 @@ public class GUITest2 extends Application {
         KeyCode code = e.getCode();
          System.out.println(e.getCode().toString());
        
-         if( code == KeyCode.DOWN ){
-           popup.show( currentParentField, Side.BOTTOM, 0, 0 ); //<- this
-         }
+        /* if( code == KeyCode.DOWN ){
+              //popup.getItems().clear();
+             for (int i = 0; i <ListOfStrings.size(); i++) {                
+                    setMenuItemOne(ListOfStrings.get(i));                
+            }
+             popup.show( currentParentField, Side.BOTTOM, 0, 0 ); //<- this
+             System.out.println("hello down");
+         }*/
+        if (code == KeyCode.ESCAPE) {
+			filter = "";
+                        System.out.println("Hello escape");
+		}
+        if (code == KeyCode.BACK_SPACE) {
+            filter = filter.substring(0, filter.length()-1);
+        }
          if (code.isLetterKey()) {
                 filter += e.getText();
                 System.out.println("Filter: "+filter.toString());
            }
-         if (code == KeyCode.ESCAPE) {
-			filter = "";
-		}
+         
         if (filter.length() == 0) {
             setMenuItem(ListOfStrings);
             popup.hide();
@@ -130,17 +140,11 @@ public class GUITest2 extends Application {
                 }
             }
            popup.show( currentParentField, Side.BOTTOM, 0, 0 );
-            /*
-                        Stream<T> itens = cmd.getItems().stream();
-			String txtUsr = filter.toString().toLowerCase();
-			itens.filter(el -> el.toString().toLowerCase().contains(txtUsr)).forEach(filteredList::add);
-			cmd.getTooltip().setText(txtUsr);
-     
-     */
+            
          }
     }
    //
-   EventHandler<KeyEvent> keyEventHandler = new EventHandler<KeyEvent>() {
+  /* EventHandler<KeyEvent> keyEventHandler = new EventHandler<KeyEvent>() {
      public void handle(KeyEvent e){
        EventTarget target = e.getTarget();
        currentParentField = (TextField)target;
@@ -173,11 +177,11 @@ public class GUITest2 extends Application {
 			itens.filter(el -> el.toString().toLowerCase().contains(txtUsr)).forEach(filteredList::add);
 			cmd.getTooltip().setText(txtUsr);
      
-     */
+     
         // }
        }
      
-   };
+   };*/
    //
    EventHandler<ActionEvent> popupAction = new EventHandler<ActionEvent>() {
      public void handle( ActionEvent e ){
