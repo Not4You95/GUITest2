@@ -53,7 +53,7 @@ public class Auto {
 			filter = "";
                         System.out.println("Hello escape");
 		}
-        if (code == KeyCode.BACK_SPACE) {
+        if (code == KeyCode.BACK_SPACE && filter.length()>0) {
             filter = filter.substring(0, filter.length()-1);
         }
          if (code.isLetterKey()) {
